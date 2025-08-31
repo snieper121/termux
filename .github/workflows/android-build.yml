@@ -32,14 +32,18 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Build with Gradle for arm64-v8a
-      # Устанавливаем переменную окружения и запускаем стандартную задачу сборки
       env:
-        TERMUX_PACKAGE_VARIANT: apt-android-7 # Эта переменная нужна для сборки
+        TERMUX_PACKAGE_VARIANT: apt-android-7
       run: ./gradlew :app:assembleDebug -PtermuxArch=arm64-v8a
+
+    # --- НАШ НОВЫЙ ШАГ ДЛЯ ОТЛАДКИ ---
+    - name: List files in build outputs
+      run: ls -R app/build/outputs/
+    # --- КОНЕЦ НОВОГО ШАГА ---
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: termux-arm64-debug.apk
-        # Путь к APK, когда архитектура задается через свойство проекта
+        # Мы пока оставляем старый путь. После следующей сборки мы заменим его на правильный.
         path: app/build/outputs/apk/debug/app-arm64-v8a-debug.apk
