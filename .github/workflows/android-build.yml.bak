@@ -39,5 +39,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: termux-arm64-debug.apk # Изменено имя артефакта
-        # Указываем точный путь к нужному нам APk
+        # Указываем точный путь к нужному нам AP
         path: app/build/outputs/apk/arm64-v8a/debug/app-arm64-v8a-debug.apk
