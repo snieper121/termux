@@ -3,7 +3,7 @@ name: Build Termux App
 on:
   push:
     branches:
-      - master # Изменено с 'main' на 'master'
+      - master
 
 jobs:
   build:
@@ -31,13 +31,15 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
 
-    - name: Build with Gradle
-      # Запускаем сборку debug-версии для архитектуры arm64-v8a
-      run: ./gradlew assembleArm64-v8aDebug
+    - name: Build with Gradle for arm64-v8a
+      # Устанавливаем переменную окружения и запускаем стандартную задачу сборки
+      env:
+        TERMUX_PACKAGE_VARIANT: apt-android-7 # Эта переменная нужна для сборки
+      run: ./gradlew :app:assembleDebug -PtermuxArch=arm64-v8a
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: termux-arm64-debug.apk # Изменено имя артефакта
-        # Указываем точный путь к нужному нам APk
-        path: app/build/outputs/apk/arm64-v8a/debug/app-arm64-v8a-debug.apk
+        name: termux-arm64-debug.apk
+        # Путь к APK, когда архитектура задается через свойство проекта
+        path: app/build/outputs/apk/debug/app-arm64-v8a-debug.apk
