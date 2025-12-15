@@ -37,7 +37,7 @@ jobs:
       run: ./gradlew :app:assembleDebug
 
     - name: Upload arm64-v8a APK
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: termux-arm64-debug.apk
         # --- ИСПРАВЛЕННЫЙ И БОЛЕЕ НАДЕЖНЫЙ ПУТЬ ---
